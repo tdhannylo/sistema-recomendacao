@@ -243,9 +243,3 @@ sistema-recomendacao/
 ├── README.md
 └── test_backend.py
 ```
-
-## Observação
-
-O projeto foi desenvolvido com foco em demonstrar o funcionamento de um sistema de recomendação e comparar diferentes abordagens utilizando os dados disponíveis.
-
-Os resultados dos experimentos são apresentados sem alterações ou criação artificial de avaliações.
