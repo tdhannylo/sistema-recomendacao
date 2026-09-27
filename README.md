@@ -236,12 +236,12 @@ sistema-recomendacao/
 │   ├── evaluation/
 │   └── recommendation/
 │
-├── app.py
-├── frontend.py
+├── chooseGame.py
+├── chooseUser.py
 ├── create_processed_dataset.py
 ├── evaluate_experiments.py
-├── test_backend.py
-└── README.md
+├── README.md
+└── test_backend.py
 ```
 
 ## Observação
