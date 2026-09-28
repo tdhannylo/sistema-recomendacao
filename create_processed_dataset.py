@@ -1,95 +1,27 @@
 from pathlib import Path
-# Importa Path para trabalhar com caminhos de arquivos e diretórios.
-
+# Será usado principalmente para criar uma matriz esparsa com valores 1 indicando a existência de uma avaliação.
 import numpy as np
-# Importa NumPy.
-# Será usado principalmente para criar uma matriz esparsa
-# com valores 1 indicando a existência de uma avaliação.
-
 import pandas as pd
-# Importa pandas para leitura, filtragem e análise dos CSVs.
-
-from scipy.sparse import csr_matrix
 # Importa csr_matrix, uma estrutura para representar matrizes esparsas
-# de maneira mais eficiente em memória.
-
+from scipy.sparse import csr_matrix
 from src.data.preprocess import validate_data
-# Importa a função que verifica se os dados possuem
-# estrutura e valores válidos.
-
 
 ROOT = Path(__file__).resolve().parent
-# Obtém a pasta onde este arquivo Python está localizado.
-#
-# Diferentemente do ROOT usado anteriormente:
-# .parent sobe apenas uma pasta.
-#
-# Se o arquivo estiver em:
-# projeto/create_processed_dataset.py
-#
-# ROOT será:
-# projeto/
-
-
 RAW_DIR = ROOT / "data" / "raw"
-# Cria o caminho para:
-# projeto/data/raw
-
-
 PROCESSED_DIR = ROOT / "data" / "processed"
-# Cria o caminho para:
-# projeto/data/processed
-
-
+# Define que serão selecionados usuários que estejam acima ou no percentil 80% de quantidade de avaliações
 USER_PERCENTILE = 0.80
-# Define que serão selecionados usuários que estejam
-# acima ou no percentil 80% de quantidade de avaliações.
-
-
 GAME_PERCENTILE = 0.80
-# Define o mesmo critério para os jogos.
-#
-# Serão considerados os jogos com quantidade de avaliações
-# igual ou superior ao percentil 80%.
-
 
 def load_raw_data():
-    # Define uma função responsável por carregar
-    # exclusivamente os dados originais.
-
-
     games = pd.read_csv(RAW_DIR / "games_metadata_5k.csv")
-    # Lê o arquivo original de metadata dos jogos.
-
-
     ratings = pd.read_csv(RAW_DIR / "game_ratings.csv")
-    # Lê o arquivo original de avaliações.
-
-
     ratings["user_id"] = ratings["user_id"].astype(str)
-    # Garante que os IDs dos usuários sejam strings.
-
-
+    # errors="raise" faz o programa falhar caso exista um valor que não possa ser convertido.
     ratings["game_id"] = pd.to_numeric(ratings["game_id"], errors="raise").astype(int)
-    # Converte os IDs dos jogos para inteiros.
-    #
-    # errors="raise" faz o programa falhar caso exista
-    # um valor que não possa ser convertido.
-
-
     ratings["rating"] = pd.to_numeric(ratings["rating"], errors="raise")
-    # Converte as avaliações para números.
-
-
     games["game_id"] = pd.to_numeric(games["game_id"], errors="raise").astype(int)
-    # Garante que os game_ids da tabela de jogos também sejam inteiros.
-
-
     return games, ratings
-    # Retorna:
-    #
-    # games  -> metadata dos jogos
-    # ratings -> avaliações originais
 
 def overlap_distribution(ratings):
     # Recebe a tabela de avaliações e calcula

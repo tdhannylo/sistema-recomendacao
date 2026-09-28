@@ -1,147 +1,51 @@
 import pandas as pd
-# Importa pandas.
-#
-# Neste trecho específico, o pandas não é usado diretamente
-# dentro de create_user_game_matrix(), mas pode ser necessário
-# em outras partes desse módulo.
 
-
+# Define uma função que transforma a tabela de avaliações em uma matriz usuário × jogo
 def create_user_game_matrix(ratings):
-    # Define uma função que transforma a tabela de avaliações
-    # em uma matriz usuário × jogo.
 
-
-    # Cada linha representa um usuario e cada coluna representa um jogo.
-    # Explica a estrutura que será criada.
-
-
+    # pivot reorganiza a tabela
     return ratings.pivot(
-        # pivot reorganiza a tabela para transformar:
-        #
-        # linhas originais:
-        # user_id | game_id | rating
-        #
-        # em:
-        #           jogo1  jogo2  jogo3
-        # usuario1    5      3      NaN
-        # usuario2    4      NaN    5
-
-
+        # Define que cada linha da nova matriz representa um usuário
         index="user_id",
-        # Define que cada linha da nova matriz representa um usuário.
-
-
+        # Define que cada coluna representa um jogo
         columns="game_id",
-        # Define que cada coluna representa um jogo.
-
-
-        values="rating"
-        # Define que o conteúdo das células será a avaliação.
+        # Define que o conteúdo das células será a avaliação
+        values="rating"   
     )
 
+# Verifica se os dados possuem a estrutura e os valores esperados.
 def validate_data(games, ratings):
-    # Cria uma função para verificar se os dados possuem
-    # a estrutura e os valores esperados.
-
-
+    # Tabela games com colunas game_id
     required_games = {"game_id"}
-    # Define as colunas obrigatórias da tabela games.
-    #
-    # Para games, precisamos pelo menos do game_id.
-
-
+    # Tabela ratings com colunas user_id, game_id e rating
     required_ratings = {"user_id", "game_id", "rating"}
-    # Define as colunas obrigatórias da tabela ratings.
-
-
     missing = {
-        "games": required_games - set(games.columns),
-        # games.columns contém as colunas existentes.
-        # set(games.columns) transforma essas colunas em um conjunto.
-        #
-        # A operação "-" encontra aquilo que está em required_games
-        # mas não existe em games.
-        #
-        # Exemplo:
-        # required = {"game_id"}
-        # existente = {"name", "rating"}
-        #
-        # resultado:
-        # {"game_id"}
-
-
+        # Vê se nas colunas possuem o mesmo tipo de informação que está em required("game_id") mas não em columns("name_id") = games_id
+        "games": required_games - set(games.columns),   
         "ratings": required_ratings - set(ratings.columns),
-        # Faz a mesma verificação para ratings.
     }
 
-
+    # Checa se há valores ausentes nas colunas
     if any(missing.values()):
-        # missing.values() contém os conjuntos de colunas ausentes.
-        #
-        # any() verifica se pelo menos um deles contém algo.
-        #
-        # Se alguma coluna obrigatória estiver faltando, entra no if.
-
-
+        # Interrompe a execução informando quais colunas estão faltando com informação
         raise ValueError(f"Colunas ausentes: {missing}")
-        # Interrompe a execução informando quais colunas estão faltando.
+        
 
-
+    # Verifica se existem valores nulos em campos, se há algum em games, ou required com 3 colunas de user_id, game_id e rating
     if games["game_id"].isna().any() or ratings[list(required_ratings)].isna().any().any():
-        # Verifica se existem valores nulos em campos importantes.
-        #
-        # games["game_id"].isna()
-        # -> identifica game_ids nulos.
-        #
-        # .any()
-        # -> verifica se existe pelo menos um.
-        #
-        # ratings[list(required_ratings)]
-        # -> seleciona user_id, game_id e rating.
-        #
-        # .isna().any().any()
-        # -> verifica se existe algum valor nulo nessas colunas.
-
-
         raise ValueError("IDs e ratings principais nao podem ser nulos")
-        # Interrompe a execução se houver valores nulos.
 
-
+    # Verifica se o mesmo usuário avaliou o mesmo jogo mais de uma vez
     if ratings.duplicated(["user_id", "game_id"]).any():
-        # Verifica se o mesmo usuário avaliou o mesmo jogo mais de uma vez.
-        #
-        # ["user_id", "game_id"] define a combinação que deveria ser única.
-
-
         raise ValueError("Existem avaliacoes duplicadas para o mesmo usuario e jogo")
-        # Gera erro caso existam avaliações duplicadas.
-
-
+    # Verifica se todos os game_ids existentes em ratings # também existem em games, todos existem -> False
     if not ratings["game_id"].isin(games["game_id"]).all():
-        # Verifica se TODOS os game_ids existentes em ratings
-        # também existem em games.
-        #
-        # .isin(...) retorna True/False para cada rating.
-        #
-        # .all() verifica se todos são True.
-        #
-        # not transforma:
-        # todos existem -> False
-        # algum não existe -> True
+        # Informa que existe uma avaliação para um jogo que não possui informações na tabela games
+        raise ValueError("Existem ratings sem metadata correspondente") 
 
-
-        raise ValueError("Existem ratings sem metadata correspondente")
-        # Informa que existe uma avaliação para um jogo que
-        # não possui informações na tabela games.
-
-
+    # Verifica se todas as avaliações estão entre 1 e 5
     if not ratings["rating"].between(1, 5).all():
-        # Verifica se todas as avaliações estão entre 1 e 5.
-
-
         raise ValueError("Ratings devem estar entre 1 e 5")
-        # Gera erro se existir uma avaliação fora desse intervalo.
-
-
+     # Se nenhuma validação falhou, retorna True
     return True
-    # Se nenhuma validação falhou, retorna True.
+   
