@@ -4,7 +4,6 @@ import streamlit as st
 from src.data.load_data import load_data
 from src.recommendation.group_recommender import recommend_for_group
 
-
 @st.cache_data
 def get_processed_data():
     games, ratings = load_data(dataset="processed")
