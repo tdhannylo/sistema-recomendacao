@@ -5,7 +5,9 @@ from src.evaluation.metrics import evaluate_user
 
 # Irá fazer o retorno de resultados dos dados dos testes, todos os testes
 
+# ============================================================
 # CONFIGURAÇÃO
+# ============================================================
 
 MODELS = ["user", "item", "popularity"]
 
@@ -18,8 +20,9 @@ RANDOM_STATE = 42
 NUMBER_OF_USERS = 5
 
 
-
+# ============================================================
 # FUNÇÕES AUXILIARES
+# ============================================================
 
 def get_common_users(ratings_raw, ratings_processed, number_of_users=5):
     """
@@ -449,8 +452,9 @@ def print_detailed_first_user(results, user_id):
             f"Interseção: {result['intersection']}"
         )
 
-
+# ============================================================
 # EXECUÇÃO
+# ============================================================
 
 def main():
 
@@ -465,9 +469,9 @@ def main():
         dataset="processed"
     )
 
-    
+    # --------------------------------------------------------
     # Seleciona os mesmos 5 usuários para os dois datasets
-
+    # --------------------------------------------------------
     users = get_common_users(
         ratings_raw,
         ratings_processed,
@@ -494,8 +498,9 @@ def main():
         ratings_processed,
     )
 
+    # --------------------------------------------------------
     # Avaliação
-
+    # --------------------------------------------------------
     print("\nExecutando avaliações...")
 
     raw_results = evaluate_dataset(
@@ -514,8 +519,9 @@ def main():
 
     print("\nAvaliação concluída.")
 
+    # --------------------------------------------------------
     # Resultados
-
+    # --------------------------------------------------------
     print_individual_results(
         results,
         users,
@@ -536,8 +542,9 @@ def main():
         users[0],
     )
 
+    # --------------------------------------------------------
     # Resumo final
-
+    # --------------------------------------------------------
     print("\n" + "=" * 70)
     print("RESUMO FINAL")
     print("=" * 70)
