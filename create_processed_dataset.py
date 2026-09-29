@@ -13,6 +13,7 @@ PROCESSED_DIR = ROOT / "data" / "processed"
 USER_PERCENTILE = 0.80
 GAME_PERCENTILE = 0.80
 
+# Irá criar o dataset processado utilizando o original encontrado no raw
 def load_raw_data():
     games = pd.read_csv(RAW_DIR / "games_metadata_5k.csv")
     ratings = pd.read_csv(RAW_DIR / "game_ratings.csv")

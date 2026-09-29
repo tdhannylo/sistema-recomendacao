@@ -6,7 +6,7 @@ Este é um projeto de um sistema de recomendação de jogos.
 
 A ideia é utilizar as avaliações feitas por diferentes usuários para encontrar jogos que possam ser interessantes para uma pessoa ou para um grupo de jogadores.
 
-O sistema possui recomendações individuais (chooseGame.py) e recomendações para um grupo (chooseUser.py) de **três jogadores**.
+O sistema possui recomendações individuais (`chooseGame.py`) e recomendações para um grupo (`chooseUser.py`) de **três jogadores**.
 
 Para as recomendações em grupo, jogos que já foram avaliados por algum dos participantes não são apresentados novamente.
 
@@ -95,7 +95,7 @@ Ela funciona como uma referência simples para comparar os resultados das outras
 
 ## Recomendação para grupos
 
-A recomendação para grupos (chooseUser.py) trabalha com **exatamente três jogadores**.
+A recomendação para grupos (`chooseUser.py`) trabalha com **exatamente três jogadores**.
 
 O processo é:
 
@@ -114,7 +114,7 @@ A interface atual utiliza a opção **Média**.
 
 ## Recomendação Individual
 
-A recomendação individual (chooseGame.py) trabalha com jogadores que participam de forma sequencial:
+A recomendação individual (`chooseGame.py`) trabalha com jogadores que participam de forma sequencial:
 
 1. o primeiro jogador informa seu nome e escolhe de 1 a 3 jogos que conhece;
 2. o segundo jogador realiza o mesmo procedimento;
@@ -124,8 +124,6 @@ A recomendação individual (chooseGame.py) trabalha com jogadores que participa
 6. os cinco primeiros resultados são apresentados na tela.
 
 O nome informado pelo participante é utilizado apenas para identificação na interface. As recomendações são geradas a partir dos usuários existentes no dataset.
-
-Também existe uma interface mais simples em `chooseUser.py`, que permite selecionar diretamente três usuários existentes no dataset para fazer a recomendação através.
 
 ## Avaliação
 
@@ -190,7 +188,7 @@ python create_processed_dataset.py
 ### 2. Executar os testes
 
 ```text
-python -m unittest -v test_backend.py
+python -m unittest -v test_system.py
 ```
 
 ### 3. Executar os experimentos
@@ -213,6 +211,12 @@ Para avaliar somente o dataset processado:
 python evaluate_experiments.py --dataset processed
 ```
 
+Para avaliar o retorno dos resultados dos testes:
+
+```text
+python show_test_results.py 
+```
+
 ### 4. Executar a interface principal
 
 ```text
@@ -228,8 +232,8 @@ python -m streamlit run chooseUser.py
 sistema-recomendacao/
 │
 ├── data/
-│   ├── raw/
-│   └── processed/
+│   ├── processed/
+│   └── raw/
 │
 │── pages/
 │   └── history.py
@@ -238,12 +242,12 @@ sistema-recomendacao/
 │   ├── data/
 │   ├── evaluation/
 │   └── recommendation/
-│
+│       
 ├── chooseGame.py
 ├── chooseUser.py
 ├── create_processed_dataset.py
 ├── evaluate_experiments.py
 ├── README.md
 ├── show_test_results.py
-└── test_backend.py
+└── test_system.py
 ```

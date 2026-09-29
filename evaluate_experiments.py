@@ -14,7 +14,7 @@ NEIGHBOR_COUNT = 10
 # Para participar da avaliação, um usuário precisa ter pelo menos 10 avaliações
 MIN_USER_RATINGS = 10
 
-# Seleciona usuários elegíveis para o experimento
+# Seleciona usuários elegíveis para os experimentos de avaliação do sistema de recomendação, serve para comparar desempenhos dos modelos 
 def choose_users(ratings, minimum=MIN_USER_RATINGS, limit=20):
     # Conta quantas avaliações cada usuário possui
     counts = ratings.groupby("user_id").size()

@@ -7,6 +7,7 @@ from src.recommendation.group_recommender import recommend_for_group
 from src.recommendation.recommender import recommend_for_user
 from src.recommendation.similarity import calculate_cosine_similarity, get_common_games
 
+# Testa o sistema para ver se suas funções estão funcionando
 
 def sample_data():
     ratings = pd.DataFrame({

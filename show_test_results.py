@@ -3,10 +3,9 @@ from statistics import mean
 from src.data.load_data import load_data
 from src.evaluation.metrics import evaluate_user
 
+# Irá fazer o retorno de resultados dos dados dos testes, todos os testes
 
-# ============================================================
 # CONFIGURAÇÃO
-# ============================================================
 
 MODELS = ["user", "item", "popularity"]
 
@@ -19,9 +18,8 @@ RANDOM_STATE = 42
 NUMBER_OF_USERS = 5
 
 
-# ============================================================
+
 # FUNÇÕES AUXILIARES
-# ============================================================
 
 def get_common_users(ratings_raw, ratings_processed, number_of_users=5):
     """
@@ -452,9 +450,7 @@ def print_detailed_first_user(results, user_id):
         )
 
 
-# ============================================================
 # EXECUÇÃO
-# ============================================================
 
 def main():
 
@@ -469,9 +465,8 @@ def main():
         dataset="processed"
     )
 
-    # --------------------------------------------------------
+    
     # Seleciona os mesmos 5 usuários para os dois datasets
-    # --------------------------------------------------------
 
     users = get_common_users(
         ratings_raw,
@@ -484,9 +479,8 @@ def main():
     for index, user_id in enumerate(users, start=1):
         print(f"  {index}. {user_id}")
 
-    # --------------------------------------------------------
+    
     # Informações dos datasets
-    # --------------------------------------------------------
 
     print_dataset_info(
         "raw",
@@ -500,9 +494,7 @@ def main():
         ratings_processed,
     )
 
-    # --------------------------------------------------------
     # Avaliação
-    # --------------------------------------------------------
 
     print("\nExecutando avaliações...")
 
@@ -522,9 +514,7 @@ def main():
 
     print("\nAvaliação concluída.")
 
-    # --------------------------------------------------------
     # Resultados
-    # --------------------------------------------------------
 
     print_individual_results(
         results,
@@ -539,18 +529,14 @@ def main():
         results,
     )
 
-    # --------------------------------------------------------
     # Detalhamento do primeiro usuário
-    # --------------------------------------------------------
 
     print_detailed_first_user(
         results,
         users[0],
     )
 
-    # --------------------------------------------------------
     # Resumo final
-    # --------------------------------------------------------
 
     print("\n" + "=" * 70)
     print("RESUMO FINAL")
