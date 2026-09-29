@@ -90,7 +90,7 @@ def interface():
         return
 
     st.title("Encontre um jogo para jogar em grupo")
-    st.write("Selecione exatamente três usuários para receber recomendações via o backend real.")
+    st.write("Selecione exatamente três usuários para receber recomendações.")
 
     with st.form("group_selection"):
         col1, col2, col3 = st.columns(3)

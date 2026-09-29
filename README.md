@@ -6,7 +6,7 @@ Este é um projeto de um sistema de recomendação de jogos.
 
 A ideia é utilizar as avaliações feitas por diferentes usuários para encontrar jogos que possam ser interessantes para uma pessoa ou para um grupo de jogadores.
 
-O sistema possui recomendações individuais e recomendações para um grupo de **três jogadores**.
+O sistema possui recomendações individuais (chooseGame.py) e recomendações para um grupo (chooseUser.py) de **três jogadores**.
 
 Para as recomendações em grupo, jogos que já foram avaliados por algum dos participantes não são apresentados novamente.
 
@@ -95,7 +95,7 @@ Ela funciona como uma referência simples para comparar os resultados das outras
 
 ## Recomendação para grupos
 
-A recomendação para grupos trabalha com **exatamente três jogadores**.
+A recomendação para grupos (chooseUser.py) trabalha com **exatamente três jogadores**.
 
 O processo é:
 
@@ -112,11 +112,9 @@ O sistema possui duas formas de combinar as recomendações:
 
 A interface atual utiliza a opção **Média**.
 
-## Interface
+## Recomendação Individual
 
-A interface foi desenvolvida utilizando Streamlit.
-
-Na versão principal da interface, os jogadores participam de forma sequencial:
+A recomendação individual (chooseGame.py) trabalha com jogadores que participam de forma sequencial:
 
 1. o primeiro jogador informa seu nome e escolhe de 1 a 3 jogos que conhece;
 2. o segundo jogador realiza o mesmo procedimento;
@@ -127,7 +125,7 @@ Na versão principal da interface, os jogadores participam de forma sequencial:
 
 O nome informado pelo participante é utilizado apenas para identificação na interface. As recomendações são geradas a partir dos usuários existentes no dataset.
 
-Também existe uma interface mais simples em `app.py`, que permite selecionar diretamente três usuários existentes no dataset.
+Também existe uma interface mais simples em `chooseUser.py`, que permite selecionar diretamente três usuários existentes no dataset para fazer a recomendação através.
 
 ## Avaliação
 
@@ -171,7 +169,6 @@ O projeto possui algumas limitações:
 * a quantidade de informações disponíveis dificulta encontrar preferências semelhantes;
 * os resultados de Precision e Recall foram zero nos experimentos realizados;
 * o dataset processado não apresentou melhoria nas métricas;
-* o projeto é uma demonstração acadêmica e não um sistema de produção.
 
 ## Tecnologias utilizadas
 
@@ -219,7 +216,10 @@ python evaluate_experiments.py --dataset processed
 ### 4. Executar a interface principal
 
 ```text
-python -m streamlit run frontend.py
+python -m streamlit run chooseGame.py
+```
+```text
+python -m streamlit run chooseUser.py
 ```
 
 ## Estrutura do projeto
@@ -231,6 +231,9 @@ sistema-recomendacao/
 │   ├── raw/
 │   └── processed/
 │
+│── pages/
+│   └── history.py
+│
 ├── src/
 │   ├── data/
 │   ├── evaluation/
@@ -241,5 +244,6 @@ sistema-recomendacao/
 ├── create_processed_dataset.py
 ├── evaluate_experiments.py
 ├── README.md
+├── show_test_results.py
 └── test_backend.py
 ```
